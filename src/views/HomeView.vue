@@ -20,7 +20,7 @@
         <Suspense>
           <CityList />
           <template #fallback>
-            <p>Loading...</p>
+            <CityCardSkeleton/>
           </template>
         </Suspense>
       </div>
@@ -34,6 +34,7 @@ import { useRouter } from 'vue-router';
 import axios from 'axios';
 import * as constants from '../extra/constants.js';
 import CityList from '@/components/CityList.vue';
+import CityCardSkeleton from '@/components/CityCardSkeleton.vue';
 
 const router = useRouter();
 const searchQuery = ref("");
@@ -60,7 +61,7 @@ const getSearchResults = () => {
 
 const previewCity = (searchResult) => {
   console.log(searchResult);
-  const [city, state] = [searchResult.name, searchResult.state];
+  const [city, state] = [searchResult.name, searchResult.state || searchResult.name];
   router.push({
     name: "cityView",
     params: { state: state.replaceAll(" ", ""), city: city },
